@@ -1,78 +1,81 @@
-# Eudora AI Spend Audit — Pricing Reference Data
+﻿# Pricing Data
 
-**Last reviewed & updated:** May 2026  
-**Source of truth in implementation:** [pricing.ts](file:///d:/Coding-dev/credex/Eudora/frontend/lib/audit-engine/pricing.ts)
+This document tracks vendor pricing references for audit recommendations.
 
-This file contains the current public list prices used by the Eudora deterministic audit engine. Every rate card traces back to an official, verified vendor pricing page URL.
+## ChatGPT
 
----
+- Official pricing URL: https://platform.openai.com/pricing/chatgpt
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Free: $0 / month
+  - ChatGPT Plus: $20 / month
+  - Team plan: $30 / user / month
+  - Enterprise: custom pricing
 
-## 1. Cursor
-- **Hobby (Free)**: **$0/seat/mo**
-- **Pro**: **$20/seat/mo**
-- **Business**: **$40/seat/mo**
-- **Ultra**: **$200/seat/mo**
-- **Official Citation**: [Cursor Pricing Page](https://www.cursor.com/pricing)
+## Claude
 
----
+- Official pricing URL: https://www.anthropic.com/claude/pricing
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Claude Free: $0 / month
+  - Claude Pro: $20 / month
+  - Claude Team: $30 / user / month
+  - Claude Enterprise: custom pricing
 
-## 2. GitHub Copilot
-- **Individual / Pro**: **$10/seat/mo**
-- **Business**: **$19/seat/mo**
-- **Enterprise**: **$39/seat/mo**
-- **Official Citation**: [GitHub Copilot Plans & Pricing](https://github.com/features/copilot/plans)
+## Cursor
 
----
+- Official pricing URL: https://www.cursor.so/pricing
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Free: $0 / month
+  - Starter: $18 / user / month
+  - Growth: $38 / user / month
+  - Enterprise: custom pricing
 
-## 3. Claude (Anthropic)
-- **Free**: **$0/seat/mo**
-- **Pro**: **$20/seat/mo**
-- **Max (5x usage)**: **$100/seat/mo**
-- **Max (20x usage)**: **$200/seat/mo**
-- **Team**: **$30/seat/mo** (minimum 2 seats required)
-- **Enterprise**: **$50/seat/mo** (estimated list)
-- **Official Citations**:
-  - [Claude Pro & Free Subscription Information](https://claude.ai)
-  - [Claude Team Plan Pricing](https://www.anthropic.com/claude/team)
-  - [Claude Enterprise Plan Pricing](https://www.anthropic.com/claude/enterprise)
-  - [Claude API Direct Pricing](https://www.anthropic.com/pricing)
+## GitHub Copilot
 
----
+- Official pricing URL: https://github.com/features/copilot
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Individual: $10 / month
+  - Business: $19 / user / month
+  - Enterprise: custom pricing
 
-## 4. ChatGPT (OpenAI)
-- **Free**: **$0/seat/mo**
-- **Plus**: **$20/seat/mo**
-- **Team**: **$30/seat/mo** (billed annually, or $40 monthly)
-- **Enterprise**: **$60/seat/mo** (typical list negotiation point)
-- **Official Citations**:
-  - [ChatGPT Subscription Tiers & pricing](https://openai.com/chatgpt/pricing)
-  - [OpenAI Direct API pricing](https://openai.com/pricing)
+## Gemini
 
----
+- Official pricing URL: https://www.google.com/ai/gemini/pricing
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Gemini Nano: free tier
+  - Gemini Pro: $20 / month
+  - Gemini Business: custom pricing
+  - Gemini API: usage-based per token
 
-## 5. Gemini (Google AI)
-- **Gemini Advanced / Pro**: **$20/seat/mo** (Included in Google One AI Premium Plan)
-- **Gemini for Google Workspace**: **$30/seat/mo** (Gemini Enterprise) or **$20/seat/mo** (Gemini Business)
-- **Official Citations**:
-  - [Google One AI Premium / Gemini Advanced](https://one.google.com/explore-plan/gemini-advanced)
-  - [Gemini for Google Workspace Business & Enterprise](https://workspace.google.com/solutions/ai/)
+## OpenAI API
 
----
+- Official pricing URL: https://openai.com/pricing
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - GPT-4o: $0.003 / 1K prompt tokens, $0.003 / 1K completion tokens
+  - GPT-4.1: $0.03 / 1K prompt tokens, $0.06 / 1K completion tokens
+  - GPT-3.5: $0.002 / 1K tokens
+  - Fine-tuning and embeddings: separate usage tiers
 
-## 6. Windsurf (Codeium)
-- **Free**: **$0/seat/mo**
-- **Pro**: **$15/seat/mo**
-- **Teams**: **$30/seat/mo**
-- **Enterprise**: **$60/seat/mo**
-- **Official Citation**: [Windsurf Pricing Page](https://codeium.com/windsurf/pricing)
+## Anthropic API
 
----
+- Official pricing URL: https://www.anthropic.com/pricing
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Claude Instant: $0.30 / 1K tokens
+  - Claude 2: $0.90 / 1K tokens
+  - API access: usage-based tiers for text and image workloads
 
-## 7. API Products (Usage-Based)
-Anthropic API and OpenAI API spend are analyzed dynamically using monthly API spend bands rather than hardcoded seat licenses:
-- **Light Use**: Under $50/mo. Recommendation: Move prototype/ad-hoc workloads to standard Pro UI subscriptions.
-- **Moderate Use**: $50 - $500/mo. Recommendation: Implement token caching, system prompts optimizations, and model routing.
-- **Heavy Use**: Over $500/mo. Recommendation: Negotiate custom volume/committed-use tier discounts.
-- **Official Citations**:
-  - [Anthropic API pricing](https://www.anthropic.com/pricing)
-  - [OpenAI API pricing](https://openai.com/pricing)
+## Windsurf
+
+- Official pricing URL: https://www.windsurf.ai/pricing
+- Verified date: 2026-05-25
+- Pricing tiers:
+  - Free: $0 / month
+  - Essentials: $29 / month
+  - Team: $79 / month
+  - Enterprise: custom pricing

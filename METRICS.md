@@ -1,52 +1,66 @@
-# Metrics
+﻿# Metrics
 
-## Acquisition
+## North Star metric
 
-| Metric | Definition |
-|--------|------------|
-| Landing sessions | Unique visitors `/` |
-| Audit starts | `/audit` views |
-| Audit completions | `POST /api/audit` success |
+- Completed shareable audits per week.
 
-## Activation
+This measures both product utility and viral distribution: an audit only matters if it is completed and shared.
 
-| Metric | Definition |
-|--------|------------|
-| Avg tools per audit | `tools.length` mean |
-| Avg reported spend | `currentMonthlySpend` mean |
-| Share created | Row in `audits` |
+## Input metrics
 
-## Value
+- Audit start rate
+- Audit completion rate
+- Share URL creation rate
+- Lead capture conversion rate
+- AI summary generation success rate
 
-| Metric | Definition |
-|--------|------------|
-| Median monthly savings | `monthlySavings` p50 |
-| % well optimized | `isWellOptimized` rate |
-| % Credex eligible | `showCredexCta` rate |
+## Event tracking strategy
 
-## Conversion
+Track events with a lightweight analytics schema:
 
-| Metric | Definition |
-|--------|------------|
-| Lead submit rate | `leads` / completions |
-| Email capture on modal | Lead modal submits |
-| Credex clicks | Outbound `utm_source=eudora` |
+- `audit_started`
+- `audit_completed`
+- `share_url_created`
+- `lead_submitted`
+- `summary_generated`
+- `email_sent`
 
-## Quality
+Capture context for each event:
 
-| Metric | Target |
-|--------|--------|
-| Lighthouse Performance | ≥ 85 |
-| Lighthouse Accessibility | ≥ 90 |
-| API error rate | < 1% |
-| Summary fallback rate | Track when OpenRouter fails |
+- vendor count
+- total spend range
+- industry tag (if provided)
+- acquisition source
 
-## Dashboard (Supabase SQL sketches)
+## Funnel metrics
 
-```sql
--- Completions last 7 days
-select date_trunc('day', created_at), count(*) from audits group by 1;
+- **Top**: visits -> audit starts
+- **Middle**: audit starts -> audit completes
+- **Bottom**: audit completes -> qualified leads
 
--- Avg savings
-select avg((result->>'monthlySavings')::numeric) from audits;
-```
+Benchmark assumptions:
+
+- 12% start rate from visitors
+- 40% completion for started audits
+- 25% lead conversion from completed audits
+
+## Pivot thresholds
+
+- If audit completion falls below 30%, the flow needs a usability pivot.
+- If share URLs are created on fewer than 20% of completed audits, the product is not viral enough.
+- If lead capture conversion is below 10%, focus on stronger value capture and better lead framing.
+
+## Why DAU is NOT the right metric
+
+DAU is too broad because Eudora is not a habitual consumer app. The real value is in the one-time or periodic audit that generates qualified spending recommendations. Tracking daily active users would obscure whether users are actually finishing audits and inviting teammates.
+
+## B2B lead generation analytics thinking
+
+Measure the funnel with business intent in mind:
+
+- completed audit => lead capture => follow-up call
+- primary signal: audits that include a company email and spend data
+- secondary signal: share link creation and revisit on audit report
+- tertiary signal: email submissions for the same audit
+
+This prioritizes quality interactions over raw traffic.

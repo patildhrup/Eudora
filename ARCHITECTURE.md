@@ -1,67 +1,137 @@
-# Architecture
+﻿# Eudora Architecture
 
-## Overview
+## System architecture
 
-Eudora is a **Next.js App Router** application in `frontend/`. All product logic lives in a single deployable unit on Vercel.
+```mermaid
+flowchart TD
+  subgraph Browser
+    A[User] -->|fills audit form| B[Next.js UI]
+    B -->|requests| C[API route /api/audit]
+  end
 
+  subgraph Frontend
+    B --> D[Audit engine client module]
+    B --> E[Shareable report page]
+  end
+
+  subgraph Backend
+    C --> F[Audit controller]
+    F --> G[Supabase DB]
+    F --> H[openrouter summarization]
+    F --> I[Resend notification]
+  end
+
+  G -->|store| J[Audit records]
+  G -->|lookup| K[Plan pricing metadata]
+  H -->|returns| L[Personalized summary]
+  I -->|email| A
 ```
-frontend/
-├── src/app/           # Routes, API handlers, layouts
-├── components/        # UI (landing, audit, results, shadcn)
-├── lib/
-│   ├── audit-engine/  # Deterministic savings logic
-│   ├── supabase/      # DB clients
-│   ├── openrouter.ts  # AI summaries only
-│   └── resend.ts      # Transactional email
-├── hooks/             # localStorage form persistence
-├── types/             # Shared TypeScript contracts
-└── utils/             # Formatting helpers
-```
 
-## Request flows
+## Full data flow
 
-### Audit run
+1. User enters AI subscriptions, current plans, and monthly spending.
+2. The frontend validates inputs and executes baseline calculations via the audit engine.
+3. The form submits to `/api/audit`.
+4. Backend validates rules again, stores the audit in Supabase, and triggers `openrouter` to generate a summary.
+5. The backend returns audit details and a share URL.
+6. The UI renders monthly/yearly savings and shows the generated summary.
+7. If the user opts in, backend sends a lead notification or email with Resend.
 
-1. User submits form → `POST /api/audit`
-2. Rate limit check (in-memory per IP)
-3. Zod validation
-4. `runAudit()` — pure TypeScript, no LLM
-5. Persist row in `audits` (service role) with generated slug
-6. Client stores payload in `sessionStorage` → `/results?slug=…`
+## Frontend/backend separation
 
-### AI summary
+- **Frontend**: React pages, audit form, results visualization, shareable report rendering, client-side validation.
+- **Backend**: Audit persistence, business rule enforcement, AI summary orchestration, lead capture.
+- Shared logic: TypeScript types and audit engine helpers are shared between frontend and backend to avoid mismatched savings calculations.
 
-1. Results page → `POST /api/summary` with audit result JSON
-2. OpenRouter chat completion (Claude/Gemini via env model)
-3. Fallback template if API missing or fails
-4. Optional update of `audits.ai_summary`
+## Audit engine architecture
 
-### Lead capture
+- Core module lives in `frontend/audit-engine`.
+- Input transformer takes subscription data and normalizes vendor-specific fields.
+- Rules engine applies deterministic financial calculations:
+  - overprovisioned seats
+  - plan mismatch
+  - unused premium features
+  - annual vs monthly price gaps
+- Output layer exports `monthlySavings`, `annualSavings`, `recommendedPlan`, and `confidenceNotes`.
 
-1. Modal → `POST /api/leads` with honeypot field
-2. Insert `leads` row
-3. Resend notifies Credex + sends user their share link
+## Database structure
 
-### Public share
+- `audits`
+  - `id`
+  - `created_at`
+  - `company_name`
+  - `email`
+  - `audit_input`
+  - `audit_output`
+  - `monthly_savings`
+  - `annual_savings`
+  - `summary_text`
+  - `share_slug`
 
-1. `GET /share/[slug]` — server component
-2. Service role fetch from Supabase
-3. OG/Twitter metadata from savings headline
-4. No PII in snapshot (tool names + team size only)
+- `pricing_metadata`
+  - `vendor`
+  - `plan_name`
+  - `monthly_price`
+  - `annual_price`
+  - `seat_range`
+  - `notes`
 
-## Design decisions
+- `lead_events`
+  - `id`
+  - `audit_id`
+  - `created_at`
+  - `email`
+  - `marketing_source`
 
-| Decision | Rationale |
-|----------|-----------|
-| Deterministic engine | Defensible savings; AI only narrates |
-| Service role on server | RLS-friendly; no anon writes |
-| sessionStorage for results | Fast UX; slug enables refresh/share |
-| In-memory rate limit | Simple MVP; upgrade to Redis/@upstash for scale |
-| Pricing catalog module | Single source for UI + engine + docs |
+## API flow
 
-## Security
+- `POST /api/audit`
+  - validate input
+  - calculate savings using shared engine
+  - persist audit snapshot
+  - call openrouter for summary
+  - return audit result and shareable link
 
-- Secrets server-only (`SUPABASE_SERVICE_ROLE_KEY`, `OPENROUTER_API_KEY`, `RESEND_API_KEY`)
-- Honeypot on lead form
-- Rate limiting on API routes
-- Public audits store aggregated snapshot, not raw form PII
+- `GET /api/audit/[slug]`
+  - resolve share slug
+  - retrieve persisted audit
+  - render public report without exposing raw customer metadata
+
+- `POST /api/lead`
+  - capture lead details after summary view
+  - send confirmation email via Resend
+
+## Why Next.js was chosen
+
+- Unified frontend and serverless API surface reduces deployment complexity.
+- Built-in page routing, static rendering, and incremental adoption of server components.
+- Good fit for a product that needs fast multi-page onboarding, results pages, and a small backend API.
+
+## Why TypeScript was chosen
+
+- Prevents hidden mismatches in financial calculations.
+- Improves developer confidence across shared frontend/backend logic.
+- Makes future API contract changes easier to reason about.
+
+## Scalability plan for handling 10k audits/day
+
+- Cache pricing metadata in-memory for audit requests.
+- Use Supabase connection pooling and read replicas for audit lookups.
+- Keep audit engine stateless, so we can horizontally scale backend service.
+- Use queueing for non-critical jobs like follow-up email sending and summary refresh.
+- Add rate limits on public share endpoints to avoid abuse.
+
+## Security considerations
+
+- Validate audit payloads server-side before persistence.
+- Use Supabase Row Level Security for audit ownership if authenticated users are added.
+- Sanitize and limit AI prompt input to avoid prompt injection via user text.
+- Protect API keys in environment variables only.
+- Use HTTPS everywhere and require secure cookies in production.
+
+## Performance considerations
+
+- Compute core audit rules in memory with O(n) vendor analysis.
+- Avoid repeated LLM calls by caching summaries for identical audit payloads for a short window.
+- Use edge-friendly cached result pages for shareable audit reports.
+- Defer email sends with background jobs to keep API response times under 300ms.

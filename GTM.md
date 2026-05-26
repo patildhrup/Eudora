@@ -1,47 +1,60 @@
-# Go-to-market
+﻿# Go-To-Market Strategy
 
-## Positioning
+## Ideal customer profile
 
-**Eudora** — free AI spend audit for startups.  
-**Credex** — we help you actually capture the savings (negotiation, consolidation, committed use).
+- Founders and finance leads at seed/Series A startups.
+- Teams spending $1k–$15k per month on AI tools.
+- Companies using multiple LLM products, Copilot seats, and API usage across finance, engineering, and GTM.
+- Early-stage SaaS, developer tooling, and AI-first startups where AI spend is treated as an operational line item.
 
-## Product Hunt (target: next month)
+## Where they hang out online
 
-### Launch assets
+- Hacker News "Show HN" and "YC Startup School" threads
+- Indie Hackers and Makerlog
+- AI and devtool communities on Slack / Discord
+- Product Hunt and Twitter/X founder threads
+- Subreddits like r/startups, r/SaaS, r/EntrepreneurRideAlong
 
-- Tagline: *Find out if you're overspending on Cursor, Copilot, and Claude in 3 minutes*
-- First comment: founder story + link to Credex for $500+/mo savings
-- Gallery: hero screenshot, results savings card, share URL preview
+## Acquisition channels
 
-### Channels
+- Hacker News launch with a concrete audit case study.
+- Twitter/X founder threads featuring real overspend examples.
+- Direct outreach to startup accelerators and advisor communities.
+- Guest posts on high-signal newsletters like Dom’s, SaaS Weekly, and The Hustle.
+- Cross-promotions with AI tool review newsletters and procurement communities.
 
-1. Product Hunt — primary launch
-2. Hacker News — Show HN (honest methodology post)
-3. Twitter/X — shareable audit links from beta users
-4. YC / startup Slack communities — eng managers
+## First 100 users strategy
 
-### Funnel
+- Launch a closed beta to existing founder connections and YC-adjacent networks.
+- Offer a free audit report in exchange for a quick call and referral.
+- Target 1-on-1 outreach to 30 seed-stage startups with a shared AI tool stack.
+- Use the shareable audit report as a product-led growth asset to turn one audit into multiple introductions.
 
-```
-Landing → Audit form → Results (value) → Lead modal → Credex call
-```
+## Zero-budget growth strategy
 
-**North star:** % audits with savings > $500 who book Credex.
+- Publish a precise spending audit case study on Hacker News and Indie Hackers.
+- Seed the product in a few Slack/Discord communities with a simple, non-salesy ask:
+  "Does this overspend model match your team’s ChatGPT/Copilot bill?"
+- Share short, practical overspend examples in founder DMs and on X.
+- Encourage every audit report share with a referral prompt: "Send this to a teammate who owns AI procurement."
 
-## Week -2 to launch
+## Hacker News / Twitter launch strategy
 
-- [ ] 10 founder interviews (`USER_INTERVIEWS.md`)
-- [ ] 5 beta audits with permission to quote savings %
-- [ ] Supabase + Vercel production env
-- [ ] Custom domain + OG images
+- Build a strong Show HN post with a real example: "I built Eudora to save startups $1,500/month on AI subscriptions."
+- Use a concise landing page preview and a sample audit case study upfront.
+- Tweet a screenshot of the audit report and a line like: "Startup AI bills are leaking 20–40% in wasted Copilot, ChatGPT, and API spend. Built a simple tool to find the leaks."
+- Follow up with replies showing actual share link examples and screening questions.
 
-## Week of launch
+## Distribution moat
 
-- [ ] PH post 12:01 AM PT
-- [ ] Team upvotes + genuine comments in first hour
-- [ ] Reply to every PH comment within 2h
+- Focus on shareable audit reports that can be passed around within a startup.
+- Build credibility with actual savings calculations instead of generic productivity advice.
+- Lean into the product as an operations tool, not just an LLM demo.
+- Capture leads after the audit to convert viewers into recurring users.
 
-## Post-launch
+## Week-1 traction expectations
 
-- Weekly pricing refresh
-- Case study: "How [Company] saved $X/mo"
+- 40–50 audit submissions from early networks.
+- 8–12 qualified leads in the first week.
+- 1–2 meaningful follow-up conversations with seed-stage companies.
+- Early feedback on pricing accuracy and share link usefulness.
