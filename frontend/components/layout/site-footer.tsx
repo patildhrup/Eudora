@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap } from "lucide-react";
+import { Asterisk } from "lucide-react";
 
 export function SiteFooter() {
   return (
@@ -28,7 +28,7 @@ export function SiteFooter() {
                   boxShadow: "0 4px 12px #DD2C0035",
                 }}
               >
-                <Zap className="size-3.5" />
+                <Asterisk className="size-3.5" />
               </div>
               <span className="text-foreground">Eudora</span>
             </Link>

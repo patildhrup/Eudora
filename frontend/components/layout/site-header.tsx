@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { Asterisk } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -16,16 +19,22 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "How it works", href: isHome ? "#how-it-works" : "/#how-it-works" },
+    { label: "FAQ", href: isHome ? "#faq" : "/#faq" },
+
+  ];
+
   return (
     <motion.header
       initial={{ y: -16, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
+      className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
           ? "border-b border-black/8 bg-background/90 backdrop-blur-2xl shadow-lg shadow-black/10"
           : "border-b border-transparent bg-transparent"
-      }`}
+        }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         {/* Logo */}
@@ -40,26 +49,33 @@ export function SiteHeader() {
               boxShadow: "0 4px 16px #DD2C0040",
             }}
           >
-            <Zap className="size-4" />
+            <Asterisk className="size-4" />
             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent" />
           </div>
           <span className="text-foreground transition-colors">Eudora</span>
+          <i className="text-primary text-sm">Insights</i>
         </Link>
 
         {/* Nav */}
         <nav className="hidden items-center gap-1 md:flex">
-          {[
-            { label: "How it works", href: "#how-it-works" },
-            { label: "FAQ", href: "#faq" },
-          ].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="relative rounded-lg px-3 py-2 text-sm text-muted-foreground transition-all duration-200 hover:text-foreground hover:bg-primary/5"
-            >
-              {item.label}
-            </a>
-          ))}
+          {navItems.map((item) => {
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href.replace(/#.*$/, "")) && item.href === pathname;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`relative rounded-lg px-3 py-2 text-sm transition-all duration-200 hover:text-foreground hover:bg-primary/5 ${isActive
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground"
+                  }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Actions */}

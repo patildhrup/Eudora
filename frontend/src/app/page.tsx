@@ -7,6 +7,7 @@ import { FAQ } from "@/components/landing/faq";
 import { Hero } from "@/components/landing/hero";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { SocialProof } from "@/components/landing/social-proof";
+import { TrustBar } from "@/components/layout/trust-bar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -17,6 +18,7 @@ export default function HomePage() {
       <SiteHeader />
       <main className="flex-1">
         <Hero />
+        <TrustBar />
         <SocialProof />
         <HowItWorks />
 
