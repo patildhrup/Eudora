@@ -55,38 +55,38 @@ export function DetailedSummaryCard({ result }: DetailedSummaryCardProps) {
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Projections Grid: 1 Month, 1 Year, 3 Years */}
-        <div className="grid gap-4 grid-cols-3">
+        <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
           {/* 1 Month */}
-          <div className="rounded-xl bg-white/[0.02] border border-border/40 p-3.5 text-center relative overflow-hidden">
-            <div className="absolute top-1 left-1">
+          <div className="rounded-xl bg-white/[0.02] border border-border/40 p-3.5 text-center relative overflow-hidden flex flex-col justify-center min-h-[85px]">
+            <div className="absolute top-1.5 left-1.5">
               <Coins className="size-3 text-zinc-400" />
             </div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">1 Month</p>
-            <p className="text-lg sm:text-2xl font-black text-foreground mt-1">
+            <p className="text-xl sm:text-2xl font-black text-foreground mt-1">
               {formatCurrency(monthlySavings)}
             </p>
             <span className="text-[9px] font-medium text-emerald-400 mt-1 block">Instant liquidity</span>
           </div>
 
           {/* 1 Year */}
-          <div className="rounded-xl bg-white/[0.02] border border-border/40 p-3.5 text-center relative overflow-hidden">
-            <div className="absolute top-1 left-1">
+          <div className="rounded-xl bg-white/[0.02] border border-border/40 p-3.5 text-center relative overflow-hidden flex flex-col justify-center min-h-[85px]">
+            <div className="absolute top-1.5 left-1.5">
               <Calendar className="size-3 text-zinc-400" />
             </div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">1 Year</p>
-            <p className="text-lg sm:text-2xl font-black text-foreground mt-1">
+            <p className="text-xl sm:text-2xl font-black text-foreground mt-1">
               {formatCurrency(annualSavings)}
             </p>
             <span className="text-[9px] font-medium text-emerald-400 mt-1 block">12x annualized runrate</span>
           </div>
 
           {/* 3 Years (Cumulative) */}
-          <div className="rounded-xl bg-gradient-to-br from-[#DD2C00]/5 to-[#FF6B35]/5 border border-[#DD2C00]/20 p-3.5 text-center relative overflow-hidden shadow-sm">
-            <div className="absolute top-1 left-1">
+          <div className="rounded-xl bg-gradient-to-br from-[#DD2C00]/5 to-[#FF6B35]/5 border border-[#DD2C00]/20 p-3.5 text-center relative overflow-hidden shadow-sm flex flex-col justify-center min-h-[85px]">
+            <div className="absolute top-1.5 left-1.5">
               <TrendingUp className="size-3 text-[#FF6B35]" />
             </div>
             <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF6B35]">3 Years</p>
-            <p className="text-lg sm:text-2xl font-black text-primary mt-1">
+            <p className="text-xl sm:text-2xl font-black text-primary mt-1">
               {formatCurrency(threeYearSavings)}
             </p>
             <span className="text-[9px] font-bold text-primary mt-1 block">Cumulative savings</span>
@@ -103,16 +103,16 @@ export function DetailedSummaryCard({ result }: DetailedSummaryCardProps) {
               {activeCategories.map(([category, value]) => (
                 <div
                   key={category}
-                  className="flex items-center justify-between text-xs rounded-xl bg-zinc-50 dark:bg-zinc-950 px-3.5 py-2.5 border border-border/40"
+                  className="flex items-center justify-between text-xs rounded-xl bg-zinc-50 dark:bg-zinc-950 px-3.5 py-2.5 border border-border/40 gap-2"
                 >
-                  <span className="font-semibold text-zinc-300">
+                  <span className="font-semibold text-zinc-300 truncate">
                     {categoryNames[category] || category}
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <span className="text-emerald-400 font-bold">
                       -{formatCurrency(value)}/mo
                     </span>
-                    <span className="text-[10px] text-muted-foreground font-medium">
+                    <span className="text-[10px] text-muted-foreground font-medium hidden xs:inline">
                       ({Math.round((value / monthlySavings) * 100)}%)
                     </span>
                   </div>

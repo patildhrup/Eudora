@@ -18,7 +18,6 @@ const COLORS = ["#DD2C00", "#FF6B35", "#FF8C42", "#a855f7", "#3b82f6", "#10a37f"
 
 export function SpendingDiagnostics({ result, input }: SpendingDiagnosticsProps) {
   // Calculate AI Spend Efficiency Score
-  // 100 is perfectly optimized. Waste drops the score.
   const totalCurrent = result.currentMonthlySpend || 1;
   const totalSavings = result.monthlySavings || 0;
   const wastePercentage = (totalSavings / totalCurrent) * 100;
@@ -60,7 +59,7 @@ export function SpendingDiagnostics({ result, input }: SpendingDiagnosticsProps)
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Efficiency Score Radial/Gauge Look */}
-          <div className="flex items-center gap-5 rounded-2xl bg-zinc-50 dark:bg-zinc-950 p-4 border border-border/40">
+          <div className="flex flex-col sm:flex-row items-center gap-5 rounded-2xl bg-zinc-50 dark:bg-zinc-950 p-4 border border-border/40 text-center sm:text-left">
             <div className="relative flex size-20 shrink-0 items-center justify-center rounded-full border-4 border-muted">
               {/* Outer stroke showing score */}
               <svg className="absolute inset-0 size-full -rotate-90">
@@ -138,12 +137,13 @@ export function SpendingDiagnostics({ result, input }: SpendingDiagnosticsProps)
 
             {/* Overall Savings pill */}
             {result.monthlySavings > 0 && (
-              <div className="rounded-xl bg-[#DD2C00]/5 border border-[#DD2C00]/10 p-3 flex justify-between items-center text-xs">
-                <div className="flex items-center gap-1.5 text-[#FF6B35]">
+              <div className="rounded-xl bg-[#DD2C00]/5 border border-[#DD2C00]/10 p-3 flex justify-between items-center text-xs gap-2">
+                <div className="flex items-center gap-1.5 text-[#FF6B35] shrink-0">
                   <TrendingDown className="size-4" />
-                  <span className="font-bold">Total Savings Identified</span>
+                  <span className="font-bold hidden sm:inline">Total Savings</span>
+                  <span className="font-bold sm:hidden">Savings</span>
                 </div>
-                <span className="font-black text-[#DD2C00]">
+                <span className="font-black text-[#DD2C00] text-right truncate">
                   {formatCurrency(result.monthlySavings)}/mo ({Math.round(wastePercentage)}%)
                 </span>
               </div>
@@ -163,8 +163,8 @@ export function SpendingDiagnostics({ result, input }: SpendingDiagnosticsProps)
         </CardHeader>
         <CardContent className="space-y-5">
           {/* Recharts Pie Chart & Legend */}
-          <div className="grid grid-cols-12 items-center gap-4">
-            <div className="col-span-5 h-28 relative">
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="size-28 shrink-0 relative">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -184,7 +184,7 @@ export function SpendingDiagnostics({ result, input }: SpendingDiagnosticsProps)
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="col-span-7 flex flex-wrap gap-x-3 gap-y-1.5">
+            <div className="flex flex-wrap gap-x-3 gap-y-1.5 justify-center sm:justify-start">
               {pieData.map((d, index) => (
                 <div key={d.name} className="flex items-center gap-1.5 text-[10px]">
                   <div
@@ -219,10 +219,10 @@ export function SpendingDiagnostics({ result, input }: SpendingDiagnosticsProps)
 
                   return (
                     <div key={idx} className="space-y-1 text-xs">
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-zinc-300">{getToolDisplayName(t.toolId)}</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-muted-foreground text-[10px]">
+                      <div className="flex justify-between items-center gap-2">
+                        <span className="font-semibold text-zinc-300 truncate">{getToolDisplayName(t.toolId)}</span>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <span className="text-muted-foreground text-[10px] hidden xs:inline">
                             {seats} seats / {maxHeadcount} cap
                           </span>
                           {hasWaste ? (

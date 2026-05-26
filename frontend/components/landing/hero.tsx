@@ -182,7 +182,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.55 }}
-          className="mx-auto mt-16 grid max-w-3xl grid-cols-3 gap-4"
+          className="mx-auto mt-16 grid max-w-3xl grid-cols-1 sm:grid-cols-3 gap-4"
         >
           {stats.map((stat, i) => (
             <motion.div
