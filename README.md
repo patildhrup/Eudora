@@ -82,9 +82,11 @@ Deployment steps:
 
 ## Screenshots
 
-- `screenshots/01-audit-flow.png`
-- `screenshots/02-savings-dashboard.png`
-- `screenshots/03-shareable-link.png`
+![Audit flow](screenshots/01-audit-flow.png)
+
+![Savings dashboard](screenshots/02-savings-dashboard.png)
+
+![Shareable link](screenshots/03-shareable-link.png)
 
 ## Architecture overview
 
