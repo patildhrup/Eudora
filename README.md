@@ -2,6 +2,8 @@
 
 Eudora is an AI Spend Audit platform designed for startups and growth-stage teams that want to stop wasting money on ChatGPT, Claude, Cursor, GitHub Copilot, Gemini, OpenAI API, Anthropic API and other AI subscriptions. It turns subscription data into deterministic savings recommendations and shareable audit reports so founders can act on overspend immediately.
 
+- visit🚀:https://eudora-insights.onrender.com
+
 ## What it does
 
 - Tracks AI subscription costs, user counts, and usage patterns.
