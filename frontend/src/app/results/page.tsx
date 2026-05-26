@@ -100,7 +100,7 @@ function ResultsContent() {
       {/* Spending Diagnostics: Circular Gauge, Before/After comparison, Allocation Pie, Seat Utilization */}
       <SpendingDiagnostics result={result} input={input} />
 
-      {/* AI Summary Card & Financial Projections Grid */}
+      {/* AI Summary Card & Financial Projections Grid card */}
       <div className="grid gap-6 md:grid-cols-2">
         <AiSummaryCard
           slug={slug}
@@ -109,7 +109,7 @@ function ResultsContent() {
           primaryUseCase={input.primaryUseCase}
           toolIds={input.tools.map((t) => t.toolId)}
         />
-        
+
         <DetailedSummaryCard result={result} />
       </div>
 
