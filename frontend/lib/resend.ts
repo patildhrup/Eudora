@@ -10,7 +10,7 @@ export async function sendLeadNotification(payload: {
 }): Promise<{ ok: boolean; error?: string }> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.RESEND_FROM_EMAIL;
-  const notify = process.env.RESEND_NOTIFY_EMAIL ?? "hello@credex.dev";
+  const notify = process.env.RESEND_NOTIFY_EMAIL ?? "patildhrup.dev@gmail.com";
 
   if (!apiKey || !from) {
     return { ok: false, error: "Email not configured" };
